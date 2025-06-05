@@ -77,6 +77,37 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Sensor nodejs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"NORMAL\",\n    \"mensagem\": \"NORMAL\",\n    \"temperatura\": 16.1,\n    \"valorMQ2\": 1,\n    \"id_sensor\": 1\n}"
+				},
+				"url": {
+					"raw": "https://fiaporacledb-24a39db8f9c4.herokuapp.com/fiap/globalSolution",
+					"protocol": "https",
+					"host": [
+						"fiaporacledb-24a39db8f9c4",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"fiap",
+						"globalSolution"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
