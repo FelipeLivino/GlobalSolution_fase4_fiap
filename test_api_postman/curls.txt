@@ -1,0 +1,18 @@
+-- Predição Sensor
+
+curl --location 'http://127.0.0.1:8000/prediction/sensor' \
+--header 'Content-Type: application/json' \
+--data '{
+    "dados": [
+        [60,3551],
+        [30,2951],
+        [30,2451],
+        [30,1200]
+    ]
+}'
+
+
+-- predição imagem
+curl --location 'http://127.0.0.1:8000/prediction/img' \
+--header 'Content-Type: image/jpeg' \
+--form 'file=@"postman-cloud:///1f041a6d-a82f-4f00-a63a-137078d94e97"'
