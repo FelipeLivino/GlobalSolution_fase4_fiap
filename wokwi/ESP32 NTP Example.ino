@@ -8,6 +8,7 @@
 #include <Wire.h>
 #include <MQUnifiedsensor.h>
 
+
 //módulos para webservice
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
@@ -132,11 +133,11 @@ void checkFire(int valorMQ2, float temperatura, float umidade){
   }
 
   // --- Impressão dos Dados (para debugging no Wokwi) ---
-  Serial.print("MQ2: "); Serial.print(valorMQ2);
+ /* Serial.print("MQ2: "); Serial.print(valorMQ2);
   Serial.print(" | Temp: "); Serial.print(temperatura); Serial.print("°C");
   Serial.print(" | Umid: "); Serial.print(umidade); Serial.print("%");
   if (houveAumentoRapidoTemp) Serial.println(" | AUMENTO RÁPIDO DE TEMP!");
-  Serial.println("");
+  Serial.println("");*/
 
   // --- Lógica de Alerta Combinado ---
   bool alertaFumacaDensa = (valorMQ2 >= LIMIAR_FUMACA_DENSA);
@@ -194,7 +195,7 @@ void checkFire(int valorMQ2, float temperatura, float umidade){
     status =  "NORMAL";
     bip_alarme_ativo(1, 6, 100);
   }
-  Serial.println(mensagem);
+  //Serial.println(mensagem);
   callWs(status, mensagem,temperatura, valorMQ2);
   delay(4000);
 }
@@ -202,7 +203,7 @@ void checkFire(int valorMQ2, float temperatura, float umidade){
 
 void callWs(char* status, char* mensagem, float temperatura, float valorMQ2 ){
   //link do webservice
-  http.begin("https://newsfacd.herokuapp.com/journeybuilder/success"); 
+  http.begin("https://fiaporacledb-24a39db8f9c4.herokuapp.com/fiap/globalSolution"); 
   http.addHeader("Content-Type", "application/json");
   
   //formar arquivo json
@@ -211,10 +212,18 @@ void callWs(char* status, char* mensagem, float temperatura, float valorMQ2 ){
   doc["mensagem"] = mensagem;
   doc["temperatura"] = temperatura;
   doc["valorMQ2"] = valorMQ2;
+  doc["id_sensor"] = 1;
 
   String httpRequestData;
   serializeJson(doc, httpRequestData);
-
+  Serial.print(status);
+  Serial.print(",");
+  Serial.print(mensagem);
+  Serial.print(",");
+  Serial.print(temperatura);
+  Serial.print(",");
+  Serial.print(valorMQ2);
+  Serial.println("");
   int httpResponseCode = http.POST(httpRequestData);
   if (httpResponseCode > 0) {
     String payload = http.getString();
