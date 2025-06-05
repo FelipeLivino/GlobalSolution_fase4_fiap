@@ -1,25 +1,21 @@
 import torch
 from torchvision import transforms
 from PIL import Image
-import os
-import sys
-import json
-import time
-import random
-from pathlib import Path
+import numpy as np 
 
 # Importa a função do nosso módulo load_model.py
-# Se main.py está em FIAP/src/ e load_model.py está em FIAP/src/model/, esta importação funciona.
-from model.load_model import carregar_modelo_incendio
+from .load_model import carregar_modelo_incendio, carregar_modelo_sensores
 
 # --- Configurações ---
-NUM_CLASSES_PROJETO = (
-    2  # Número de classes para o problema (ex: incêndio, não incêndio)
-)
+NUM_CLASSES_PROJETO = 2
 
-# Caminho para o modelo relativo à raiz do projeto (FIAP/)
+CORRESPONDENCIA_CLASSES_SENSORES = {0: "ALERTA MAXIMO", 1: "ALTO", 2: "ATENCAO", 3: "NORMAL"}
+
+# Caminho para o modelo relativo à raiz do projeto 
 # Ajuste "saved_models" para "modelos_salvos" se este for o nome da sua pasta.
 CAMINHO_MODELO_CHECKPOINT = "saved_models/modelo_incendio.pth"
+CAMINHO_MODELO_Sensores = "saved_models/RandomForest_Optimized_model.joblib"
+CAMINHO_SCALER_SENSORES = "saved_models/scaler_sensores.joblib"
 
 # Defina as transformações da imagem (devem ser as mesmas usadas durante o treinamento)
 transformacoes_imagem = transforms.Compose(
@@ -39,19 +35,6 @@ MAPEAMENTO_CLASSES = {0: "Não Incêndio", 1: "Incêndio"}
 def prever_imagem(
     caminho_imagem: str, modelo, device, transformacoes, mapeamento_classes
 ):
-    """
-    Carrega uma imagem, aplica transformações e faz uma previsão usando o modelo.
-
-    Args:
-        caminho_imagem (str): Caminho para o arquivo de imagem.
-        modelo: O modelo PyTorch treinado.
-        device: O dispositivo (CPU/CUDA) onde o modelo está.
-        transformacoes: As transformações torchvision a serem aplicadas na imagem.
-        mapeamento_classes (dict): Dicionário para mapear o índice da classe para um nome.
-
-    Returns:
-        str: A descrição da classe prevista, ou None em caso de erro.
-    """
     try:
         imagem = Image.open(caminho_imagem).convert("RGB")
     except FileNotFoundError:
@@ -66,10 +49,7 @@ def prever_imagem(
     # Dentro de prever_imagem em main.py
     with torch.no_grad():
         saida = modelo(imagem_tensor)
-        print(f"Saídas brutas do modelo: {saida}")  # Linha de depuração
-        # Você pode também imprimir as probabilidades após aplicar Softmax
-        # probabilidades = torch.softmax(saida, dim=1)
-        # print(f"Probabilidades: {probabilidades}")
+        print(f"Saídas brutas do modelo: {saida}") 
         _, predicao_idx = torch.max(saida, 1)
 
     classe_prevista_idx = predicao_idx.item()
@@ -102,42 +82,29 @@ def perform_ai_magic(image_path_str: str):
             "message": "Erro na previsão",
             "error": "Modelo de IA falhou ao processar"
         }
+    
+#Prever dados dos sensores
+def perform_ai_sensors(X_novo_lista):
+    X_novo_numpy = np.array(X_novo_lista)
+    modelo, scaler = carregar_modelo_sensores(CAMINHO_MODELO_Sensores, CAMINHO_SCALER_SENSORES)
+    
+    if modelo is None or scaler is None:
+        print("Modelo ou scaler não carregado. Abortando predição.")
+        return [] # Ou levante uma exceção
 
-""""
-if __name__ == "__main__":
-    print("Iniciando script principal...")
+    X_novo_numpy = np.array(X_novo_lista)
 
-    try:
-        print(
-            f"Carregando modelo com {NUM_CLASSES_PROJETO} classes do checkpoint '{CAMINHO_MODELO_CHECKPOINT}'..."
-        )
-        modelo_incendio, dispositivo = carregar_modelo_incendio(
-            num_classes_saida=NUM_CLASSES_PROJETO,
-            caminho_relativo_checkpoint=CAMINHO_MODELO_CHECKPOINT,
-        )
-        print(f"Modelo carregado com sucesso no dispositivo: {dispositivo}!")
-    except Exception as e:
-        print(f"Falha crítica ao carregar o modelo: {e}")
-        exit()
+    # O scaler espera dados 2D. Se X_novo_numpy for 1D (uma única amostra), redimensione.
+    if X_novo_numpy.ndim == 1:
+        X_novo_numpy = X_novo_numpy.reshape(1, -1)
+    
+    # Aplicar o escalonamento aos novos dados
+    X_novo_scaled = scaler.transform(X_novo_numpy)
+    
+    previsoes = modelo.predict(X_novo_scaled)
+    print(f"Previsões para os novos dados (escalonados): {previsoes}")
 
-    script_main_dir = os.path.dirname(os.path.abspath(__file__))  # FIAP/src/
-    project_root_dir = os.path.join(script_main_dir, "..")  # FIAP/
-    caminho_imagem_exemplo = os.path.join(
-        project_root_dir, "data", "test_images", "img6.jpg"
-    )
-    caminho_imagem_exemplo = os.path.normpath(caminho_imagem_exemplo)
-
-    print(f"\nTentando fazer previsão para a imagem: {caminho_imagem_exemplo}")
-    descricao_previsao = prever_imagem(
-        caminho_imagem_exemplo,
-        modelo_incendio,
-        dispositivo,
-        transformacoes_imagem,
-        MAPEAMENTO_CLASSES,
-    )
-
-    if descricao_previsao:
-        print(f"Resultado da previsão: {descricao_previsao}")
-
-    print("\nScript principal concluído.")
-"""
+    respostas = []
+    for elemento in previsoes:
+        respostas.append(CORRESPONDENCIA_CLASSES_SENSORES.get(elemento, "Classe Desconhecida"))
+    return respostas
