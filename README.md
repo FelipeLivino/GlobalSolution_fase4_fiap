@@ -4,11 +4,11 @@
 
 <br>
 
-# Nome do projeto: FarmTech Solutions - Modelo de Banco de Dados
+# Nome do projeto: Global Solution (GS1) - FIAP
 
 ## Nome do grupo: Rumo ao NEXT
 
-## 👨‍🎓 Integrantes:
+### 👨‍🎓 Integrantes:
 
 - Felipe Livino dos Santos (RM 563187)
 - Daniel Veiga Rodrigues de Faria (RM 561410)
@@ -16,7 +16,7 @@
 - Daniel Tavares de Lima Freitas (RM 562625)
 - Gabriel Konno Carrozza (RM 564468)
 
-## 👩‍🏫 Professores:
+### 👩‍🏫 Professores:
 
 ### Tutor(a)
 
@@ -25,6 +25,8 @@
 ### Coordenador(a)
 
 - ANDRÉ GODOI CHIOVATO
+
+---
 
 ## Visão Geral
 
