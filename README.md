@@ -63,7 +63,7 @@ dados/	CSVs de sensores para treino/validação
 saved_models/	Pesos .pth (visão) e .joblib (sensores)
 src/	Código-fonte da API e utilitários
 notebooks/	Cadernos Jupyter de exploração e treino
-nodejs/	Protótipo de back-end Express (obsoleto)
+nodejs/	Protótipo de back-end Express
 wokwi/	Diagrama JSON do circuito ESP32
 main.py	Entrypoint FastAPI
 requirements.txt	
