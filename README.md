@@ -8,6 +8,24 @@
 
 ## Nome do grupo: Rumo ao NEXT
 
+## 👨‍🎓 Integrantes:
+
+- Felipe Livino dos Santos (RM 563187)
+- Daniel Veiga Rodrigues de Faria (RM 561410)
+- Tomas Haru Sakugawa Becker (RM 564147)
+- Daniel Tavares de Lima Freitas (RM 562625)
+- Gabriel Konno Carrozza (RM 564468)
+
+## 👩‍🏫 Professores:
+
+### Tutor(a)
+
+- Leonardo Ruiz Orabona
+
+### Coordenador(a)
+
+- ANDRÉ GODOI CHIOVATO
+
 ## Visão Geral
 
 Sistema de **monitoramento de risco agrícola** que combina visão computacional, leitura de sensores ambientais e uma API REST em FastAPI para emitir alertas de incêndio, temperatura e umidade em tempo (quase) real.
@@ -127,24 +145,6 @@ curl -X POST http://localhost:8000/prediction/sensor \
 |`POST`|`/prediction/sensor`|`{ "dados": [[float, int], ...] }`|`{ "risco": "ALTO" }`|
 
 Detalhes completos em `/docs`.
-
-## 👨‍🎓 Integrantes:
-
-- Felipe Livino dos Santos (RM 563187)
-- Daniel Veiga Rodrigues de Faria (RM 561410)
-- Tomas Haru Sakugawa Becker (RM 564147)
-- Daniel Tavares de Lima Freitas (RM 562625)
-- Gabriel Konno Carrozza (RM 564468)
-
-## 👩‍🏫 Professores:
-
-### Tutor(a)
-
-- Leonardo Ruiz Orabona
-
-### Coordenador(a)
-
-- ANDRÉ GODOI CHIOVATO
 
 ## 🗃 Histórico de lançamentos
 
