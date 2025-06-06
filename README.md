@@ -30,7 +30,7 @@
 
 ## 🔗 Apresentação em Vídeo (YouTube)
 
-📺 Assista ao vídeo do nosso projeto no canal oficial:  
+📺 Assista ao vídeo do nosso projeto no canal do youtube:  
 👉 [https://youtu.be/-Mz7iqoxxyc](https://youtu.be/-Mz7iqoxxyc)
 
 ## Visão Geral
