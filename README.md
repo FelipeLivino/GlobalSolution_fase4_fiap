@@ -176,6 +176,33 @@ curl -X POST http://localhost:8000/prediction/sensor \
 
 Detalhes completos em `/docs`.
 
+
+## 🔌 1. Simulador de Circuito – Wokwi (ESP32)
+
+- **Conecta-se ao WiFi** automaticamente (`Wokwi-GUEST`).
+- **Aquecimento e regulação do sensor (MQ2)**
+  - Aguarda 10 segundos para que o sensor de fumaça aqueça a resistencia e capte informações precisas
+  - O sensor  é regulado com o valor de 1ppm 
+- **Envio Web**  
+   - Forma JSON com campos `status`, `mensagem`, `temperatura`, `valorMQ2`, `id_sensor`.  
+   - Envia via HTTP POST e exibe código de resposta.
+- **Configura sensores e atuadores**:
+  - **Sensor DHT22** (temperatura e umidade).
+  - **MQ2** (simula valor de fumaça).
+- Coleta os dados a cada 4 segundos:
+  - Temperatura, fumaça.
+- **Envia os dados coletados em JSON para uma API externa**.
+- Também imprime no terminal serial os dados formatado.
+
+## Resumo do Circuito
+- **DHT22** — pino 14; use resistor de pull-up de 10 kΩ entre DATA e 5V.  
+- **MQ2** — pino 34 (ADC1_CH6); formar divisor com resistor de 10 kΩ.  
+
+## Arquitetura do circuito feito no worki.com
+
+<img src="assets/sensor_wokwi.png" alt="Circuito do projeto" width="100%" height="100%">
+
+
 ## 🗃 Histórico de lançamentos
 
 ## 📋 Licença
