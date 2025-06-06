@@ -106,6 +106,9 @@ requirements.txt
 - (Opcional) GPU com CUDA 11+ para acelerar inferência
 - Git
 - Postman
+- Node.js v22.16.0
+- MySQL
+- Heroku CLI
 
 ---
 ## Instalação
@@ -177,7 +180,7 @@ curl -X POST http://localhost:8000/prediction/sensor \
 Detalhes completos em `/docs`.
 
 
-## 🔌 1. Simulador de Circuito – Wokwi (ESP32)
+## 🔌 2. Simulador de Circuito – Wokwi (ESP32)
 
 - **Conecta-se ao WiFi** automaticamente (`Wokwi-GUEST`).
 - **Aquecimento e regulação do sensor (MQ2)**
@@ -200,7 +203,28 @@ Detalhes completos em `/docs`.
 
 ## Arquitetura do circuito feito no worki.com
 
-<img src="assets/sensor_wokwi.png" alt="Circuito do projeto" width="100%" height="100%">
+<img src="assets/sensor_wokwi.png" alt="Circuito do projeto" height="40%">
+
+
+## 🔌 3. Aplicação para receber dados do Circuito – Wokwi (ESP32)
+- **Criar conta no heroku (ou algum outro servidor web)**
+- **Adicionar o add-on JawsDB MySQL**
+  - Após a instalação do add-n deve-se clicar no icone de configuração
+  - Receber as credencias e adiciona-las como variaveis de ambiente, assim como no arquivo .envEXAMPLE
+- **Configurações no enviroment nodejs**
+  - Executar o comando heroku:login e realizar o login na sua conta
+  - Iniciar o git com o comando `git init`
+  - Adicionar o servidor remoto no repositório `heroku git:remote -a [NOME DO SEU APP]`
+  - Adicionar os arquivos no git para subir o servidor `git add .`
+  - Realizar o commit `git commit -am "make it better"`
+  - Realizar o deploy para o servidor `git push heroku main`
+  - O CLI vai informar quando o deploy foi feito e quando o servidor estiver disponível
+- **Acessar o Heroku**
+  - Ir até a sua aplicação
+  - Clicar no botão de abir a aplicação
+  - Copiar a URL da aplicação
+  - Usar como base [SUA_URL]/fiap/globalSolution e adicionar no wokwi.
+- **Salvar e executar a aplicação no wokwi**
 
 
 ## 🗃 Histórico de lançamentos
