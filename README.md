@@ -8,11 +8,11 @@
 
 ## Nome do grupo: Rumo ao NEXT
 
-Sistema de **monitoramento de risco agrícola** que combina visão computacional, leitura de sensores ambientais e uma API REST em FastAPI para emitir alertas de incêndio, temperatura e umidade em tempo (quase) real.
-
 ---
 
 ## Visão Geral
+
+Sistema de **monitoramento de risco agrícola** que combina visão computacional, leitura de sensores ambientais e uma API REST em FastAPI para emitir alertas de incêndio, temperatura e umidade em tempo (quase) real.
 
 O projeto integra duas frentes principais:
 
