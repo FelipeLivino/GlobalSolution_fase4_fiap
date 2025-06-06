@@ -28,6 +28,11 @@
 
 ---
 
+## 🔗 Apresentação em Vídeo (YouTube)
+
+📺 Assista ao vídeo do nosso projeto no canal oficial:  
+👉 [https://youtu.be/-Mz7iqoxxyc](https://youtu.be/-Mz7iqoxxyc)
+
 ## Visão Geral
 
 Sistema de **monitoramento de risco agrícola** que combina visão computacional, leitura de sensores ambientais e uma API REST em FastAPI para emitir alertas de incêndio, temperatura e umidade em tempo (quase) real.
